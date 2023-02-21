@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.ilya.composition_game.R
 import com.ilya.composition_game.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
@@ -26,8 +27,15 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.understandButton.setOnClickListener {
-
+            lunchChooseLevelFragment()
         }
+    }
+
+    private fun lunchChooseLevelFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
+            .addToBackStack(ChooseLevelFragment.NAME)
+            .commit()
     }
 
     override fun onDestroyView() {
