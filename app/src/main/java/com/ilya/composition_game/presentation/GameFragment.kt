@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import com.ilya.composition_game.R
 import com.ilya.composition_game.databinding.FragmentGameBinding
 import com.ilya.composition_game.domain.entity.GameResult
@@ -22,11 +21,13 @@ class GameFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
     private lateinit var initLevel: Level
+
+    private val gameViewModelFactory: GameViewModelFactory by lazy {
+        GameViewModelFactory(initLevel, requireActivity().application)
+    }
+
     private val gameViewModel: GameViewModel by lazy {
-        ViewModelProvider(
-            this,
-            AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[GameViewModel::class.java]
+        ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
     }
 
     private val tvOptions by lazy {
@@ -59,7 +60,6 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setClickListenersToOptions()
-        gameViewModel.startGame(initLevel)
     }
 
     private fun observeViewModel() {
