@@ -10,10 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.ilya.composition_game.R
+import androidx.navigation.fragment.navArgs
 import com.ilya.composition_game.databinding.FragmentGameBinding
 import com.ilya.composition_game.domain.entity.GameResult
-import com.ilya.composition_game.domain.entity.Level
 
 class GameFragment : Fragment() {
 
@@ -21,10 +20,10 @@ class GameFragment : Fragment() {
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
 
-    private lateinit var initLevel: Level
+    private val args by navArgs<GameFragmentArgs>()
 
     private val gameViewModelFactory: GameViewModelFactory by lazy {
-        GameViewModelFactory(initLevel, requireActivity().application)
+        GameViewModelFactory(args.level, requireActivity().application)
     }
 
     private val gameViewModel: GameViewModel by lazy {
@@ -42,11 +41,6 @@ class GameFragment : Fragment() {
                 add(tvOption6)
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
     }
 
     override fun onCreateView(
@@ -127,20 +121,7 @@ class GameFragment : Fragment() {
         _binding = null
     }
 
-    private fun parseArgs() {
-        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
-            initLevel = it
-        }
-    }
-
     private fun lunchGameFinishedFragment(gameResult: GameResult) {
-        val args = Bundle().apply {
-            putParcelable(GameFinishedFragment.KEY_GAME_RESULT, gameResult)
-        }
-        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, args)
-    }
-
-    companion object {
-        const val KEY_LEVEL = "key_level"
+        findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult))
     }
 }

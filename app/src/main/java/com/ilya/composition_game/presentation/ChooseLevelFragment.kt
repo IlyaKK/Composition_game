@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.ilya.composition_game.R
 import com.ilya.composition_game.databinding.FragmentChooseLevelBinding
 import com.ilya.composition_game.domain.entity.Level
 
@@ -47,10 +46,9 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun lunchGameFragment(level: Level) {
-        val args = Bundle().apply {
-            putParcelable(GameFragment.KEY_LEVEL, level)
-        }
-        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment, args)
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level)
+        )
     }
 
     override fun onDestroyView() {
