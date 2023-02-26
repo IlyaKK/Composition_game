@@ -21,7 +21,7 @@ class GameFinishedFragment : Fragment() {
 
     private val args by navArgs<GameFinishedFragmentArgs>()
 
-    private val gameResult: GameResult by lazy {
+    private val gameResultArg: GameResult by lazy {
         args.gameResult
     }
 
@@ -40,23 +40,24 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun setResultGame() {
+        binding.gameResult = gameResultArg
         with(binding) {
             emojiResult.setImageDrawable(getDrawByState())
-            tvRequiredAnswers.text = String.format(
+            /*tvRequiredAnswers.text = String.format(
                 getString(R.string.required_score),
-                gameResult.gameSettings.minCountOfRightValue
+                gameResultArg.gameSettings.minCountOfRightValue
             )
             tvScoreAnswers.text = String.format(
                 getString(R.string.score_answers),
-                gameResult.countOfRightAnswers
+                gameResultArg.countOfRightAnswers
             )
             tvRequiredPercentage.text = String.format(
                 getString(R.string.required_percentage),
-                gameResult.gameSettings.minPercentOfRightAnswer
-            )
+                gameResultArg.gameSettings.minPercentOfRightAnswer
+            )*/
             tvScorePercentage.text = String.format(
                 getString(R.string.score_percentage),
-                gameResult.getPercentOfRightAnswers()
+                gameResultArg.getPercentOfRightAnswers()
             )
         }
     }
@@ -70,7 +71,7 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun getDrawByState(): Drawable? {
-        val id: Int = if (gameResult.winner) {
+        val id: Int = if (gameResultArg.winner) {
             R.drawable.ic_smile
         } else {
             R.drawable.sad
