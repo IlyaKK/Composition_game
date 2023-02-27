@@ -1,12 +1,20 @@
 package com.ilya.composition_game.presentation
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.ilya.composition_game.R
 import com.ilya.composition_game.domain.entity.GameResult
+
+interface OnOptionClickListener {
+    fun onOptionClick(option: Int)
+}
 
 @BindingAdapter("emojiResult")
 fun bindEmojiResult(imageView: ImageView, winner: Boolean) {
@@ -61,3 +69,35 @@ private fun getScorePercent(gameResult: GameResult) =
         ((gameResult.countOfRightAnswers / gameResult.countOfQuestions.toDouble()) * 100).toInt()
     }
 
+@BindingAdapter("enoughAnswersProgress")
+fun bindAnswersProgress(textView: TextView, enoughCountAnswers: Boolean) {
+    val color = getColorByState(textView.context, enoughCountAnswers)
+    textView.setTextColor(color)
+}
+
+@BindingAdapter("enoughPercent")
+fun bindEnoughPercentRightAnswers(progressBar: ProgressBar, enoughPercent: Boolean) {
+    val color = getColorByState(progressBar.context, enoughPercent)
+    progressBar.progressTintList = ColorStateList.valueOf(color)
+}
+
+private fun getColorByState(context: Context, goodState: Boolean): Int {
+    val colorResId = if (goodState) {
+        android.R.color.holo_green_light
+    } else {
+        android.R.color.holo_red_light
+    }
+    return ContextCompat.getColor(context, colorResId)
+}
+
+@BindingAdapter("numberAsText")
+fun bindNumberAsText(textView: TextView, number: Int) {
+    textView.text = number.toString()
+}
+
+@BindingAdapter("onOptionClickListener")
+fun bindOnOptionClickListener(textView: TextView, clickListener: OnOptionClickListener) {
+    textView.setOnClickListener {
+        clickListener.onOptionClick(textView.text.toString().toInt())
+    }
+}
