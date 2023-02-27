@@ -1,9 +1,9 @@
 # Composition game
-Project app of course [Android proffesional Level (Kotlin)](https://stepik.org/course/117314/info). 
+Project app of course [Android professional Level (Kotlin)](https://stepik.org/course/117314/info). 
 ## About
 This is a game in which you need to guess the number knowing the sum of the number and one of the terms.
 ## Instruments
-In this project I study Clean Architecture, Kotlin, Live Data, Fragments, Binding, Jatpack Navigation, Fragment Navigation, ViewModelFactory.
+In this project I study Clean Architecture, Kotlin, Live Data, Fragments, SafeArgs of Jetpack Navigation, DataBinding, Jetpack Navigation, Fragment Navigation, ViewModelFactory.
 ## Screens
 ![image](https://user-images.githubusercontent.com/43324144/221021603-3f2586be-2da0-40a4-a8c8-3034a842b292.png)
 ![image](https://user-images.githubusercontent.com/43324144/221021670-bb69d79d-1e54-4b06-8bdb-2b7cfe021a8c.png)
